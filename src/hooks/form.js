@@ -6,6 +6,7 @@ const useForm = (callback) => {
 
   const handleSubmit = (event) => {
     if (event) event.preventDefault();
+    event.reset();
     callback(values);
   };
 

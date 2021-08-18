@@ -1,0 +1,98 @@
+@import "~bootstrap/scss/bootstrap";
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding:0;
+  width: 100%;
+}
+.todo-details {
+  display:flex;
+  flex-direction:column;
+
+  header {
+      display:flex;
+      flex-direction:row;
+      justify-content:space-between;
+      padding:.5em 1em;
+  }
+
+  .item {
+      flex:1;
+      padding: 1em;
+  }
+
+}
+
+.complete-true {
+  background-color: #F93154;
+  border-radius: 10px;
+  margin-right: 2rem;
+}
+
+.complete-false {
+  background-color: #00B74A;
+  border-radius: 10px;
+  margin-right: 2rem;
+}
+
+b {
+  color: rgb(143, 143, 143);
+  font-size: large;
+  font-weight: 700;
+}
+
+.item-text {
+  color:rgb(100, 100, 100);
+  font-size: large;
+  margin-bottom: 1rem;
+}
+
+.item-difficulty {
+  color:rgb(100, 100, 100);
+  font-size: small;
+  font-weight: 500;
+  margin-bottom: .5rem;
+  position: absolute;
+  right: 1em;
+  bottom: 1%;
+}
+
+.close {
+  font-size: x-large;
+  font-weight: 700;
+  position: absolute;
+  right: .5em;
+  bottom: .25em;
+}
+
+.close:hover {
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.badge:hover {
+  cursor: pointer;
+}
+
+.todo {
+
+  width: 90%;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  margin: auto;
+
+  form {
+      display:flex;
+      flex-direction:column;
+      margin-right: 2em;
+
+      label {
+          display: flex;
+          flex-direction:column;
+          margin-bottom: 1em;
+      }
+  }
+
+} 

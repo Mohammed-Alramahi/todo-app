@@ -1,9 +1,13 @@
 import Todo from './components/todo/todo'
-import './App.css';
-
+import SettingsProvider from './context/settings';
+import Header from './components/header/header';
 function App() {
   return (
-    <Todo />
+    <SettingsProvider>
+      <Header />
+      <Todo />
+    </SettingsProvider>
+
   );
 }
 

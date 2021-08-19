@@ -17,13 +17,13 @@ const ToDo = () => {
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem);
   const [currentPage, setCurrentPage] = useState(1);
-  const [todosPerPage] = useState(3);
+  const [todosPerPage] = useState(context.itemsPerPage);
+  const [showCompleted] = useState(context.showCompleted);
   function addItem(item) {
     item.id = uuid();
     item.complete = false;
     setList([...list, item]);
   }
-
   function deleteItem(id) {
     const items = list.filter(item => item.id !== id);
     setList(items);
@@ -31,29 +31,32 @@ const ToDo = () => {
 
   function toggleComplete(id) {
 
-    const items = list.map(item => {
-      if (item.id == id) {
+    let items = list.map(item => {
+      if (item.id === id) {
         item.complete = !item.complete;
       }
       return item;
     });
+    if (!showCompleted) {
+      items = list.filter(item => (!item.complete))
 
+    }
     setList(items);
 
   }
 
 
-
   useEffect(() => {
-    let incompleteCount = list.filter(item => !item.complete).length;
-    setIncomplete(incompleteCount);
+    let incompleteCount = list.filter(item => !item.complete);
+    setIncomplete(incompleteCount.length);
+    setList(incompleteCount);
+
     document.title = `To Do List: ${incomplete}`;
-    console.log(context);
-  }, [list]);
 
+  }, [incomplete]);
 
-  const indexOfLastTodo = currentPage * todosPerPage;
-  const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+  const indexOfLastTodo = currentPage * parseInt(todosPerPage);
+  const indexOfFirstTodo = indexOfLastTodo - parseInt(todosPerPage);
   const currentTodos = list.slice(indexOfFirstTodo, indexOfLastTodo);
 
   const paginate = pageNumber => setCurrentPage(pageNumber);

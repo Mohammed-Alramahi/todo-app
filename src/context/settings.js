@@ -3,17 +3,22 @@ import React, { useState } from 'react';
 export const SettingsContext = React.createContext();
 
 function SettingsProvider(props) {
-    const [sortBy, setSortBy] = useState('Easiest');
-    const [itemsPerPage, setItemsPerPage] = useState(3);
-    const [showCompleted, setShowCompleted] = useState(false);
+    const show = localStorage.getItem('showCompleted');
+    let value = false;
+    if (show === "true") {
+        value = true;
+    }
+    const [sortBy, setSortBy] = useState(localStorage.getItem("sortBy"));
+    const [itemsPerPage, setItemsPerPage] = useState(localStorage.getItem("itemsPerPage"));
+    const [showCompleted, setShowCompleted] = useState(value);
 
     const state = {
         sortBy,
-        setSort: setSortBy,
+        setSortBy: setSortBy,
         itemsPerPage,
-        setItem: setItemsPerPage,
+        setItemsPerPage: setItemsPerPage,
         showCompleted,
-        setShow: setShowCompleted
+        setShowCompleted: setShowCompleted
     }
 
     return (

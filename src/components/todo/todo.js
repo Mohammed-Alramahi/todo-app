@@ -14,6 +14,8 @@ import { SettingsContext } from '../../context/settings'
 import { AuthContext } from '../../context/auth';
 import { If, Then, Else } from 'react-if';
 import Signup from '../auth/signup';
+import axios from 'axios';
+const API = 'https://api-js401.herokuapp.com/api/v1/todo';
 const ToDo = () => {
   const settingsContext = useContext(SettingsContext);
   const authContext = useContext(AuthContext);
@@ -23,38 +25,52 @@ const ToDo = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPage] = useState(settingsContext.itemsPerPage);
   const [showCompleted] = useState(settingsContext.showCompleted);
-  function addItem(item) {
+  async function addItem(item) {
     item.id = uuid();
     item.complete = false;
-    setList([...list, item]);
+    const response = await axios.post(API, item);
+    console.log(response);
+    setList([...list, response.data]);
   }
-  function deleteItem(id) {
-    const items = list.filter(item => item.id !== id);
-    setList(items);
+  async function deleteItem(id) {
+    await axios.delete(`${API}/${id}`);
+    fetchData();
   }
-
+  async function putItem(id, item) {
+    await axios.put(`${API}/${id}`, item);
+    fetchData();
+  }
   function toggleComplete(id) {
 
     let items = list.map(item => {
-      if (item.id === id) {
+      if (item._id === id) {
         item.complete = !item.complete;
+        putItem(id, item);
       }
       return item;
     });
-    if (!showCompleted) {
-      items = list.filter(item => (!item.complete))
 
-    }
     setList(items);
 
   }
+  async function fetchData() {
+    const response = await (await axios.get(API)).data;
+    const listItems = response.results.map(item => {
+      return item;
+    });
+    setList(listItems)
 
+  }
+  useEffect(() => {
+    fetchData();
+    console.log(list);
+
+  }, []);
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete);
     setIncomplete(incompleteCount.length);
     setList(incompleteCount);
-
     document.title = `To Do List: ${incomplete}`;
 
   }, [incomplete]);
@@ -62,6 +78,7 @@ const ToDo = () => {
   const indexOfLastTodo = currentPage * parseInt(todosPerPage);
   const indexOfFirstTodo = indexOfLastTodo - parseInt(todosPerPage);
   const currentTodos = list.slice(indexOfFirstTodo, indexOfLastTodo);
+
 
   const paginate = pageNumber => setCurrentPage(pageNumber);
 

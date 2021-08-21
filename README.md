@@ -12,7 +12,7 @@
 
 - Lab #4 PR: https://github.com/Mohammed-Alramahi/todo-app/pull/4
 
-- Deployed: https://6121371878bb6c0b3e5e3f82--goofy-shockley-da5e9d.netlify.app/
+- Deployed Lab #33: https://6121371878bb6c0b3e5e3f82--goofy-shockley-da5e9d.netlify.app/
 
 ## Install Dependences
 

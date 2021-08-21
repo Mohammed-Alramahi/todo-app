@@ -8,15 +8,15 @@ function TodoList(props) {
         <>
 
             {props.list.map(item => (
-                < Card className="mb-4" style={{ width: '28rem' }} key={item.id}>
+                < Card className="mb-4" style={{ width: '28rem' }} key={item._id}>
                     <ListGroup variant="flush">
                         <ListGroup.Item>
                             <>
-                                <Badge pill bg={item.complete ? "danger" : "success"} className={`complete-${item.complete.toString()}`} key={item.id} onClick={() => props.handleComplete(item.id)}>
+                                <Badge pill bg={item.complete ? "danger" : "success"} className={`complete-${item.complete.toString()}`} key={item._id} onClick={() => props.handleComplete(item._id)}>
                                     {item.complete ? "Complete" : " Pending "}
                                 </Badge>
                                 <b className="item-asignee">{item.assignee}</b>
-                                <b className="close" aria-label="Close" onClick={() => props.handleDelete(item.id)}>&times;</b>
+                                <b className="close" aria-label="Close" onClick={() => props.handleDelete(item._id)}>&times;</b>
                             </>
                         </ListGroup.Item>
                     </ListGroup>

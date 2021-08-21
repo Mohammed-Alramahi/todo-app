@@ -2,6 +2,7 @@ import Todo from './components/todo/todo'
 import SettingsProvider from './context/settings';
 import Header from './components/header/header';
 import Settings from './components/settings/settings';
+import AuthProvider from './context/auth';
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,15 +16,17 @@ if (!localStorage.getItem("sortBy") || !localStorage.getItem("showCompleted") ||
 
 function App() {
   return (
-    <SettingsProvider>
-      <Router>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={Todo} />
-          <Route exact path="/settings" component={Settings} />
-        </Switch>
-      </Router>
-    </SettingsProvider>
+    <AuthProvider>
+      <SettingsProvider>
+        <Router>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Todo} />
+            <Route exact path="/settings" component={Settings} />
+          </Switch>
+        </Router>
+      </SettingsProvider>
+    </AuthProvider>
 
   );
 }

@@ -11,14 +11,18 @@ import TodoForm from '../form/form';
 import Pagination from '../pagination/pagination'
 import './todo.scss';
 import { SettingsContext } from '../../context/settings'
+import { AuthContext } from '../../context/auth';
+import { If, Then, Else } from 'react-if';
+import Signup from '../auth/signup';
 const ToDo = () => {
-  const context = useContext(SettingsContext);
+  const settingsContext = useContext(SettingsContext);
+  const authContext = useContext(AuthContext);
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem);
   const [currentPage, setCurrentPage] = useState(1);
-  const [todosPerPage] = useState(context.itemsPerPage);
-  const [showCompleted] = useState(context.showCompleted);
+  const [todosPerPage] = useState(settingsContext.itemsPerPage);
+  const [showCompleted] = useState(settingsContext.showCompleted);
   function addItem(item) {
     item.id = uuid();
     item.complete = false;
@@ -63,41 +67,47 @@ const ToDo = () => {
 
   return (
     <>
-
-      <section className="todo">
-        <Container>
-          <Row>
-            <Col>
-              <Navbar bg="dark" variant="dark" className="my-4">
-                <Navbar.Brand className="mx-3">
-                  To Do List Manager({list.filter(item => !item.complete).length})
-                </Navbar.Brand>
-              </Navbar>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <TodoForm handleSubmit={addItem} />
-            </Col>
-            <Col>
-              <TodoList
-                list={currentTodos ? currentTodos : list}
-                handleChange={handleChange}
-                handleComplete={toggleComplete}
-                handleDelete={deleteItem}
-                handleSubmit={handleSubmit}
-              />
-              {currentTodos.length > 0 &&
-                <Pagination
-                  todosPerPage={todosPerPage}
-                  totalTodos={list.length}
-                  paginate={paginate}
-                />
-              }
-            </Col>
-          </Row>
-        </Container>
-      </section>
+      <If condition={authContext.loggedIn}>
+        <Then>
+          <section className="todo">
+            <Container>
+              <Row>
+                <Col>
+                  <Navbar bg="dark" variant="dark" className="my-4">
+                    <Navbar.Brand className="mx-3">
+                      To Do List Manager({list.filter(item => !item.complete).length})
+                    </Navbar.Brand>
+                  </Navbar>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <TodoForm handleSubmit={addItem} />
+                </Col>
+                <Col>
+                  <TodoList
+                    list={currentTodos ? currentTodos : list}
+                    handleChange={handleChange}
+                    handleComplete={toggleComplete}
+                    handleDelete={deleteItem}
+                    handleSubmit={handleSubmit}
+                  />
+                  {currentTodos.length > 0 &&
+                    <Pagination
+                      todosPerPage={todosPerPage}
+                      totalTodos={list.length}
+                      paginate={paginate}
+                    />
+                  }
+                </Col>
+              </Row>
+            </Container>
+          </section>
+        </Then>
+        <Else>
+          <Signup />
+        </Else>
+      </If>
     </>
   );
 };

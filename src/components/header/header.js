@@ -1,21 +1,22 @@
 import React from 'react'
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import Auth from '../auth/signin';
 function Header() {
-
     return (
-        <Navbar bg="primary" variant="dark">
-
-
-            <Nav className="primary" defaultActiveKey="/home" as="ul">
-                <Nav.Item as="li">
-                    <Nav.Link href="/">Home</Nav.Link>
-                </Nav.Item>
-                <Nav.Item as="li">
-                    <Nav.Link href="/settings">Settings</Nav.Link>
-                </Nav.Item>
-            </Nav>
-        </Navbar>
+        <>
+            <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+                <Container>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto" >
+                            <Nav.Link href="/" className="text-dark">Home</Nav.Link>
+                            <Nav.Link href="/settings" className="text-dark">Settings</Nav.Link>
+                        </Nav>
+                        <Auth />
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+        </>
     )
 }
 export default Header;

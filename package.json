@@ -6,14 +6,18 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "base-64": "^1.0.0",
     "bootstrap": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
+    "react-cookies": "^0.1.1",
     "react-dom": "^17.0.2",
     "react-if": "^4.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "superagent": "^6.1.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
